@@ -1,0 +1,24 @@
+---
+title: "BRMS linear model"
+output: html_notebook
+---
+
+```{r, message=FALSE}
+library(tidyverse)
+library(brms)
+
+N <- 100
+x <- seq(0, 10, length.out = N)
+e <- rnorm(N)
+y <- 3.17 + 7.18 * x + e
+inp_data <- tibble(x, y)
+plot(inp_data, type = 'l')
+
+priors <- prior(uniform(0, 10), class = Intersept) +
+  prior(uniform(3, 15), class = b)
+
+lin_fit <- brm(y ~ x, data = inp_data, refresh = 0)
+
+summary(lin_fit)
+plot(lin_fit)
+```
