@@ -1,6 +1,10 @@
 ---
-title: "BRMS non-linear fitting"
-output: html_notebook
+title: "BRMS non-linear sin fitting"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'sin_fitting.html'))})
 ---
 
 ## Non-inear fitting
@@ -24,6 +28,6 @@ sin_fit <- brm(bf(y ~ a * sin(b * x), a + b ~ 1, nl = TRUE),
                data = inp_data, prior = priors, refresh = 0)
 
 summary(sin_fit)
+
 plot(sin_fit)
-beepr::beep(2)
 ```
