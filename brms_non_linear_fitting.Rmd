@@ -16,7 +16,9 @@ y <- 7 * sin(2.5 * x) + e
 inp_data <- tibble(x, y)
 plot(inp_data, type = 'l')
 
-
+priors <- prior(cauchy(0, 1), nlpar = "a", lb = 0) +
+  prior(cauchy(0, 1), nlpar = "b", lb = 0)  +
+  prior(cauchy(0, 1), class = 'sigma' )
 
 sin_fit <- brm(bf(y ~ a * sin(b * x), a + b ~ 1, nl = TRUE),
                data = inp_data, prior = priors, refresh = 0)
