@@ -1,0 +1,27 @@
+---
+title: "BRMS non-linear fitting"
+output: html_notebook
+---
+
+## Non-inear fitting
+
+```{r, message=FALSE}
+library(tidyverse)
+library(brms)
+
+N <- 100
+x <- seq(0, 10, length.out = N)
+e <- rnorm(N, 0.1)
+y <- 7 * sin(2.5 * x) + e
+inp_data <- tibble(x, y)
+plot(inp_data, type = 'l')
+
+
+
+sin_fit <- brm(bf(y ~ a * sin(b * x), a + b ~ 1, nl = TRUE),
+               data = inp_data, prior = priors, refresh = 0)
+
+summary(sin_fit)
+plot(sin_fit)
+beepr::beep(2)
+```
